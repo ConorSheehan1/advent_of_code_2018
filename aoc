@@ -1,0 +1,61 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'thor'
+
+class Aoc < Thor
+
+  desc 'to_screen DAY INPUT (default=in/day.txt)', 'send output to the console'
+  # @param [String] day
+  # @param [String] input
+  def to_screen(day, input=nil)
+    with_output(day, input) do |output|
+      puts(output)
+    end
+  end
+
+  # @param [String] day
+  # @param [String] input
+  desc 'to_file DAY INPUT (default=in/$day.txt)', 'send output to a file'
+  def to_file(day, input=nil)
+    output_file = "out/#{day}.txt"
+    if File.exists?(output_file)
+      loop do
+        puts("#{output_file} already exists. Overwrite? y/n")
+        answer = STDIN.gets.chomp
+        return false if answer == 'n'
+        break if answer == 'y'
+      end
+    end
+    puts("writing to #{output_file}")
+
+    File.open("out/#{day}.txt", "w") do |f|
+      with_output(day, input) do |output|
+        f.write(output)
+      end
+    end
+  end
+
+  # @param [String] day
+  desc 'spec DAY', 'run tests for day'
+  def spec(day)
+    system("bundle exec rspec spec/#{day}_spec.rb")
+  end
+
+  map 'to_sc' => 'to_screen'
+  map 'to_f'  => 'to_file'
+
+  private
+
+  # @param [String] day
+  # @param [String] input
+  def with_output(day, input)
+    require_relative "src/#{day}.rb"
+    input ||= day
+    input_file = "in/#{input}.txt"
+    results = main(File.readlines(input_file))
+    yield(results)
+  end 
+end
+
+Aoc.start
