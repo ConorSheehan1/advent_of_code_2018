@@ -4,6 +4,34 @@
 require 'thor'
 
 class Aoc < Thor
+  include Thor::Actions
+
+  # https://github.com/erikhuda/thor/wiki/Generators
+  def self.source_root
+    File.dirname(__FILE__)
+  end
+
+  # https://github.com/erikhuda/thor/issues/120
+  desc 'generate_day DAY', 'generate a src and test file for a given day'
+  # @param [String] day
+  def generate_day(day)
+    opts = {day: day}
+    template('templates/src.tt', "src/#{day}.rb", opts)
+    template('templates/spec.tt', "spec/#{day}_spec.rb", opts)
+  end
+
+  desc 'destroy_day DAY', 'delete the src and test file for a given day'
+  # @param [String] day
+  def destroy_day(day)
+    files = ["src/#{day}.rb", "spec/#{day}_spec.rb"]
+    files.each do |f|
+      if File.exist?(f)
+        File.delete(f) if confirm("delete #{f}")
+      else
+        say("#{f} does not exist", :red)
+      end
+    end
+  end
 
   desc 'to_screen DAY INPUT (default=in/day.txt)', 'send output to the console'
   # @param [String] day
@@ -18,16 +46,9 @@ class Aoc < Thor
   # @param [String] input
   desc 'to_file DAY INPUT (default=in/$day.txt)', 'send output to a file'
   def to_file(day, input=nil)
-    output_file = "out/#{day}.txt"
-    if File.exists?(output_file)
-      loop do
-        puts("#{output_file} already exists. Overwrite? y/n")
-        answer = STDIN.gets.chomp
-        return false if answer == 'n'
-        break if answer == 'y'
-      end
-    end
-    puts("writing to #{output_file}")
+    out_f = "out/#{day}.txt"
+    confirm("#{out_f} already exists. Overwrite") if File.exists?(out_f)
+    puts("writing to #{out_f}")
 
     File.open("out/#{day}.txt", "w") do |f|
       with_output(day, input) do |output|
@@ -44,6 +65,8 @@ class Aoc < Thor
 
   map 'to_sc' => 'to_screen'
   map 'to_f'  => 'to_file'
+  map 'g'     => 'generate_day'
+  map 'd'     => 'destroy_day'
 
   private
 
@@ -55,7 +78,18 @@ class Aoc < Thor
     input_file = "in/#{input}.txt"
     results = main(File.readlines(input_file))
     yield(results)
-  end 
+  end
+
+  # @param [String] message
+  # @return [Boolean]
+  def confirm(message)
+    loop do
+      say("#{message}? y/n", :yellow)
+      answer = STDIN.gets.chomp
+      return false if answer == 'n'
+      return true if answer == 'y'
+    end
+  end
 end
 
 Aoc.start
