@@ -2,7 +2,7 @@
 
 require_relative '../src/<%= config[:day] %>.rb'
 
-describe '<%= config[:day] %>' do
+describe 'day_<%= config[:day] %>' do
   it 'should do something' do
 
   end

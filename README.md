@@ -1,6 +1,9 @@
-Avent of code 2018
+Ruby solutions for [advent of code 2018](https://adventofcode.com/2018)
+and a thor script for generating scripts to solve aoc problems.
 
-aoc uses thor so it contains help output itself.  
+## Usage
+
+The aoc script uses thor so it contains help output itself.  
 just run ./aoc to see how to use it
 
 ```
@@ -10,3 +13,15 @@ just run ./aoc to see how to use it
 ./aoc to_f test_day test_input  # run the script on custom input, send the output to a file
 ```
 
+## Project
+
+```
+# tests
+bundle exec rspec
+
+# linter
+bundle exec rubocop
+
+# docs
+bundle exec yard
+```
