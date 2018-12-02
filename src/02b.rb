@@ -35,7 +35,7 @@ def string_to_regex(string)
 
   arr.each_with_index do |_char, index|
     regexes << arr.each_with_index.map do |c, i|
-      i == index ? '.' : c
+      i == index ? "." : c
     end.join
   end
 

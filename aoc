@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'thor'
+require "thor"
 
 # Utility class for generating running and testing advent of code days
 class Aoc < Thor
@@ -13,15 +13,15 @@ class Aoc < Thor
   end
 
   # https://github.com/erikhuda/thor/issues/120
-  desc 'generate_day DAY', 'Generate a src and test file for a given day'
+  desc "generate_day DAY", "Generate a src and test file for a given day"
   # @param [String] day
   def generate_day(day)
     opts = { day: day }
-    template('templates/src.tt', "src/#{day}.rb", opts)
-    template('templates/spec.tt', "spec/#{day}_spec.rb", opts)
+    template("templates/src.tt", "src/#{day}.rb", opts)
+    template("templates/spec.tt", "spec/#{day}_spec.rb", opts)
   end
 
-  desc 'destroy_day DAY', 'Delete the src and test file for a given day'
+  desc "destroy_day DAY", "Delete the src and test file for a given day"
   # @param [String] day
   def destroy_day(day)
     files = ["src/#{day}.rb", "spec/#{day}_spec.rb"]
@@ -34,7 +34,7 @@ class Aoc < Thor
     end
   end
 
-  desc 'to_screen DAY INPUT (default=in/day.txt)', 'Send output to the console'
+  desc "to_screen DAY INPUT (default=in/day.txt)", "Send output to the console"
   # @param [String] day
   # @param [String] input
   def to_screen(day, input = nil)
@@ -45,13 +45,13 @@ class Aoc < Thor
 
   # @param [String] day
   # @param [String] input
-  desc 'to_file DAY INPUT (default=in/$day.txt)', 'Send output to a file'
+  desc "to_file DAY INPUT (default=in/$day.txt)", "Send output to a file"
   def to_file(day, input = nil)
     out_f = "out/#{day}.txt"
     confirm("#{out_f} already exists. Overwrite") if File.exist?(out_f)
     puts("writing to #{out_f}")
 
-    File.open("out/#{day}.txt", 'w') do |f|
+    File.open("out/#{day}.txt", "w") do |f|
       with_output(day, input) do |output|
         f.write(output)
       end
@@ -59,15 +59,15 @@ class Aoc < Thor
   end
 
   # @param [String] day
-  desc 'spec DAY', 'Run tests for a given day'
+  desc "spec DAY", "Run tests for a given day"
   def spec(day)
     system("bundle exec rspec spec/#{day}_spec.rb")
   end
 
-  map 'to_sc' => 'to_screen'
-  map 'to_f'  => 'to_file'
-  map 'g'     => 'generate_day'
-  map 'd'     => 'destroy_day'
+  map "to_sc" => "to_screen"
+  map "to_f"  => "to_file"
+  map "g"     => "generate_day"
+  map "d"     => "destroy_day"
 
   private
 
@@ -88,8 +88,8 @@ class Aoc < Thor
     loop do
       say("#{message}? y/n", :yellow)
       answer = STDIN.gets.chomp
-      return false if answer == 'n'
-      return true if answer == 'y'
+      return false if answer == "n"
+      return true if answer == "y"
     end
   end
 end

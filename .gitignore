@@ -1,3 +1,4 @@
 .byebug*
 doc
 .yardoc
+.rubocop_todo.yml
