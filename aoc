@@ -3,6 +3,7 @@
 
 require 'thor'
 
+# Utility class for generating running and testing advent of code days
 class Aoc < Thor
   include Thor::Actions
 
@@ -15,7 +16,7 @@ class Aoc < Thor
   desc 'generate_day DAY', 'generate a src and test file for a given day'
   # @param [String] day
   def generate_day(day)
-    opts = {day: day}
+    opts = { day: day }
     template('templates/src.tt', "src/#{day}.rb", opts)
     template('templates/spec.tt', "spec/#{day}_spec.rb", opts)
   end
@@ -36,7 +37,7 @@ class Aoc < Thor
   desc 'to_screen DAY INPUT (default=in/day.txt)', 'send output to the console'
   # @param [String] day
   # @param [String] input
-  def to_screen(day, input=nil)
+  def to_screen(day, input = nil)
     with_output(day, input) do |output|
       puts(output)
     end
@@ -45,12 +46,12 @@ class Aoc < Thor
   # @param [String] day
   # @param [String] input
   desc 'to_file DAY INPUT (default=in/$day.txt)', 'send output to a file'
-  def to_file(day, input=nil)
+  def to_file(day, input = nil)
     out_f = "out/#{day}.txt"
-    confirm("#{out_f} already exists. Overwrite") if File.exists?(out_f)
+    confirm("#{out_f} already exists. Overwrite") if File.exist?(out_f)
     puts("writing to #{out_f}")
 
-    File.open("out/#{day}.txt", "w") do |f|
+    File.open("out/#{day}.txt", 'w') do |f|
       with_output(day, input) do |output|
         f.write(output)
       end
@@ -76,7 +77,8 @@ class Aoc < Thor
     require_relative "src/#{day}.rb"
     input ||= day
     input_file = "in/#{input}.txt"
-    results = main(File.readlines(input_file))
+    func = method("day_#{day}".to_sym)
+    results = func.call(File.readlines(input_file))
     yield(results)
   end
 

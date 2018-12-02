@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-def main(arr)
+def day<%= config[:day] %>(arr)
 
 end

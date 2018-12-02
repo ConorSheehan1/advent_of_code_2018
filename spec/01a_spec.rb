@@ -2,8 +2,8 @@
 
 require_relative '../src/01a.rb'
 
-describe '01a' do
+describe 'day_01a' do
   it 'should return 10' do
-    expect(main(%w[+5 +4 +1])).to eq(10)
+    expect(day_01a(%w[+5 +4 +1])).to eq(10)
   end
 end

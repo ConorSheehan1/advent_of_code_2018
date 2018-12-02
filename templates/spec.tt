@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative '../src/<%=config[:day]%>.rb'
+require_relative '../src/<%= config[:day] %>.rb'
 
-describe '<%=config[:day]%>' do
+describe '<%= config[:day] %>' do
   it 'should do something' do
 
   end

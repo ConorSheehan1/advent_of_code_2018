@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
-def main(arr)
+def day_01b(arr)
   frequencies = [0]
   numbers = arr.map { |v| v.strip.to_i }
-  # while true
   loop do
     numbers.each do |num|
       new_v = frequencies[-1] + num
@@ -13,9 +12,3 @@ def main(arr)
     end
   end
 end
-
-# result = main(File.readlines('in/01a.txt'))
-
-# File.open('out/01b.rb', 'w') do |f|
-#   f.write(result)
-# end
