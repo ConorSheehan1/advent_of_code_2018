@@ -1,3 +1,6 @@
--
-LICENCE.md
+src/*.rb
 aoc
+
+-
+README.md
+LICENCE.md
