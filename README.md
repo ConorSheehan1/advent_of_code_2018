@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/ConorSheehan1/advent_of_code_2018.svg?branch=master)](https://travis-ci.org/ConorSheehan1/advent_of_code_2018)
+
 Ruby solutions for [advent of code 2018](https://adventofcode.com/2018)
 and a thor script for generating scripts to solve aoc problems.
 

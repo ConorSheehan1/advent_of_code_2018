@@ -1,4 +1,5 @@
 .byebug*
 doc
+coverage
 .yardoc
 .rubocop_todo.yml

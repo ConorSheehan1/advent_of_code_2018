@@ -3,3 +3,9 @@ Style/StringLiterals:
 Metrics/AbcSize:
   # increase from 15 to 16 for 03a str_coords_to_hash
   Max: 16
+Security/Eval:
+  Exclude:
+    - spec/support/stdout_helper.rb
+Metrics/BlockLength:
+  Exclude:
+    - spec/*
