@@ -1,2 +1,5 @@
 Style/StringLiterals:
   EnforcedStyle: double_quotes
+Metrics/AbcSize:
+  # increase from 15 to 16 for 03a str_coords_to_hash
+  Max: 16

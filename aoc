@@ -75,7 +75,8 @@ class Aoc < Thor
   # @param [String] input
   def with_output(day, input)
     require_relative "src/#{day}.rb"
-    input ||= day
+    # unless input is specified, default to daya.txt
+    input ||= day.gsub("b", "a")
     input_file = "in/#{input}.txt"
     func = method("day_#{day}".to_sym)
     results = func.call(File.readlines(input_file))
