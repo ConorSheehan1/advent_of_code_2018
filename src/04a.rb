@@ -13,15 +13,17 @@ def day_04a(arr)
     if string.include?("Guard #")
       @current_guard_id = string.match(/\#\d+/)[0].tr("#", "")
       @awake_at = get_time(string)
-      guards[@current_guard_id] = { sleep_times: 0 } unless guards[@current_guard_id]
+      guards[@current_guard_id] = { sleep_times: [] } unless guards[@current_guard_id]
     elsif string.include?("wakes")
       @awake_at = get_time(string)
       # don't include minute that guard wakes up (-60 seconds)
       sleep_duration = @awake_at.to_i - (@asleep_at.to_i - 60)
-      if guards[@current_guard_id][:sleep_time] && @asleep_at
-        guards[@current_guard_id][:sleep_time] += sleep_duration
-      else
-        guards[@current_guard_id][:sleep_time] = sleep_duration
+      if guards[@current_guard_id][:sleep_times] && @asleep_at
+        guards[@current_guard_id][:sleep_times] << {
+          start: @asleep_at,
+          end: @awake_at,
+          duration: sleep_duration
+        }
       end
       @asleep_at = nil
     elsif string.include?("sleep")
@@ -30,10 +32,14 @@ def day_04a(arr)
   end
   # 2441 wrong
   # 2411 too low
-  guards.max_by {|k, v| v[:sleep_time] }[0]
+  sleepiest_guard(guards)
+  # longest_sleep = sleepiest_guard[1][:sleep_times].max_by {|h| h[:duration]}
+  # most_common_sleep_time = 
+
 end
 
-def get_most_sleep_guard(ordered_guard_sleep_times)
+def sleepies_guard(guards)
+  guards.max_by {|k, v| v[:sleep_times].map {|h| h[:duration]}.sum }
 end
 
 def get_time(string)
