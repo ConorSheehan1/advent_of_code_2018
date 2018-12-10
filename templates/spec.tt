@@ -4,6 +4,6 @@ require_relative "../src/<%= config[:day] %>.rb"
 
 describe "day_<%= config[:day] %>" do
   it "should do something" do
-
+    # expect(day_<%= config[:day] %>(arr)).to eq(0)
   end
 end

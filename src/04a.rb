@@ -30,18 +30,18 @@ def day_04a(arr)
   tired_guard = sleepiest_guard(guards)
   @all_minutes = {}
   tired_guard[1][:sleep_times].map do |sleeps|
-    duration_to_minute_array(sleeps[:start], sleeps[:end])
+    duration_to_minute_array(sleeps[:start], sleeps[:end], @all_minutes)
   end
   sleepiest_minute = @all_minutes.max_by {|k,v| v}[0].to_i
   sleepiest_id = tired_guard[0].to_i
   sleepiest_minute * sleepiest_id
 end
 
-def duration_to_minute_array(start_time, end_time)
+def duration_to_minute_array(start_time, end_time, minutes)
   # minutes = {}
   while start_time <= end_time
     minute = start_time.strftime("%M")
-    @all_minutes[minute] ? @all_minutes[minute] += 1 : @all_minutes[minute] = 1
+    minutes[minute] ? minutes[minute] += 1 : minutes[minute] = 1
     # add 60 seconds (1 minute)
     start_time += 60
   end
