@@ -38,7 +38,7 @@ def day_04a(arr)
 
 end
 
-def sleepies_guard(guards)
+def sleepiest_guard(guards)
   guards.max_by {|k, v| v[:sleep_times].map {|h| h[:duration]}.sum }
 end
 
