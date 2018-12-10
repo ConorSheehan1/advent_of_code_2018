@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 
-# require "date"
 require "time"
-require "byebug"
 
 def day_04a(arr)
-  byebug
   guards = {}
   times = sort_by_times(arr)
   @awake_at, @asleep_at, @current_guard_id = nil, nil, nil
@@ -30,12 +27,24 @@ def day_04a(arr)
       @asleep_at = get_time(string)
     end
   end
-  # 2441 wrong
-  # 2411 too low
-  sleepiest_guard(guards)
-  # longest_sleep = sleepiest_guard[1][:sleep_times].max_by {|h| h[:duration]}
-  # most_common_sleep_time = 
+  tired_guard = sleepiest_guard(guards)
+  @all_minutes = {}
+  tired_guard[1][:sleep_times].map do |sleeps|
+    duration_to_minute_array(sleeps[:start], sleeps[:end])
+  end
+  sleepiest_minute = @all_minutes.max_by {|k,v| v}[0].to_i
+  sleepiest_id = tired_guard[0].to_i
+  sleepiest_minute * sleepiest_id
+end
 
+def duration_to_minute_array(start_time, end_time)
+  # minutes = {}
+  while start_time <= end_time
+    minute = start_time.strftime("%M")
+    @all_minutes[minute] ? @all_minutes[minute] += 1 : @all_minutes[minute] = 1
+    # add 60 seconds (1 minute)
+    start_time += 60
+  end
 end
 
 def sleepiest_guard(guards)

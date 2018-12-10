@@ -23,6 +23,6 @@ describe "day_04a" do
       "[1518-11-05 00:45] falls asleep",
       "[1518-11-05 00:55] wakes up"
     ]
-    expect(day_04a(arr)).to eq("10")
+    expect(day_04a(arr)).to eq(240)
   end
 end
