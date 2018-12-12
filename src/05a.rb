@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 # @param [Array] arr
 # @return [Integer] length of polymer
 def day_05a(arr)
@@ -35,8 +34,8 @@ end
 # @param [Array] arr
 # @return [Boolean] array contains uppercase and lower case version of la etter
 def has_match?(arr)
-  small = arr.select {|v| is_lower?(v)}.first
-  big = arr.select {|v| is_upper?(v)}.first
+  small = arr.select { |v| is_lower?(v) }.first
+  big = arr.select { |v| is_upper?(v) }.first
   small && big && (small.upcase == big)
 end
 
@@ -46,7 +45,7 @@ def collapse_matches(arr)
   output = []
   i = 0
   while i < arr.length
-    pair = arr[i..i+1]
+    pair = arr[i..i + 1]
     if has_match?(pair)
       i += 2
     else

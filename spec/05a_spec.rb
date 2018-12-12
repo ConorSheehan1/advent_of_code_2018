@@ -8,7 +8,6 @@ describe "get_polymer" do
   end
 end
 
-
 describe "day_05a" do
   it "should return the length of the polymer" do
     expect(day_05a(["dabAcCaCBAcCcaDA"])).to eq(10)

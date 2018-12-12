@@ -64,6 +64,14 @@ class Aoc < Thor
     system("bundle exec rspec spec/#{day}_spec.rb")
   end
 
+  # TODO: override help method to show mappings as well as default method name
+  # https://github.com/bundler/bundler/blob/master/lib/bundler/vendor/thor/lib/thor.rb#L93
+  # desc "help", "help"
+  # def help
+  #   puts mappings
+  #   super
+  # end
+
   map "to_sc" => "to_screen"
   map "to_f"  => "to_file"
   map "g"     => "generate_day"

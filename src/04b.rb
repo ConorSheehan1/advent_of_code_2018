@@ -6,7 +6,9 @@ require_relative "./04a"
 def day_04b(arr)
   guards = {}
   times = sort_by_times(arr)
-  @awake_at, @asleep_at, @current_guard_id = nil, nil, nil
+  @awake_at = nil
+  @asleep_at = nil
+  @current_guard_id = nil
   times.each do |string|
     if string.include?("Guard #")
       @current_guard_id = string.match(/\#\d+/)[0].tr("#", "")
@@ -24,19 +26,11 @@ def day_04b(arr)
   end
   tired_guard = sleepies_guard_strategy2(guards)
   sleepiest_id = tired_guard.first[0].to_i
-  sleepiest_minute = tired_guard.first[1][:sleep_times].max_by {|k,v| v}[0].to_i
+  sleepiest_minute = tired_guard.first[1][:sleep_times].max_by { |_k, v| v }[0].to_i
   sleepiest_minute * sleepiest_id
-  # 74975 too high
 end
 
 def sleepies_guard_strategy2(guards)
-  # guards.max_by do |id, sleeps|
-  #   if sleeps[:sleep_times].empty?
-  #     0
-  #   else
-  #     sleeps[:sleep_times].max_by {|k,v| v}
-  #   end
-  # end
   current_max = [guards.first].to_h
   guards.each do |id, sleep_hash|
     max_sleep = current_max.first[1][:sleep_times].values.max || 0
