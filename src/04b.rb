@@ -8,16 +8,18 @@ def day_04b(arr)
   times = sort_by_times(arr)
   @awake_at = nil
   @asleep_at = nil
-  @current_guard_id = nil
+  @current_id = nil
   times.each do |string|
     if string.include?("Guard #")
-      @current_guard_id = string.match(/\#\d+/)[0].tr("#", "")
+      @current_id = string.match(/\#\d+/)[0].tr("#", "")
       @awake_at = get_time(string)
-      guards[@current_guard_id] = { sleep_times: {} } unless guards[@current_guard_id]
+      guards[@current_id] = { sleep_times: {} } unless guards[@current_id]
     elsif string.include?("wakes")
       @awake_at = get_time(string)
-      if guards[@current_guard_id] && @asleep_at
-        duration_to_minute_array(@asleep_at, @awake_at, guards[@current_guard_id][:sleep_times])
+      if guards[@current_id] && @asleep_at
+        duration_to_minute_array(
+          @asleep_at, @awake_at, guards[@current_id][:sleep_times]
+        )
       end
       @asleep_at = nil
     elsif string.include?("sleep")
@@ -26,7 +28,8 @@ def day_04b(arr)
   end
   tired_guard = sleepies_guard_strategy2(guards)
   sleepiest_id = tired_guard.first[0].to_i
-  sleepiest_minute = tired_guard.first[1][:sleep_times].max_by { |_k, v| v }[0].to_i
+  tired_times = tired_guard.first[1][:sleep_times]
+  sleepiest_minute = tired_times.max_by { |_k, v| v }[0].to_i
   sleepiest_minute * sleepiest_id
 end
 

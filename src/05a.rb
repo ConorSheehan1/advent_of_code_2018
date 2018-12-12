@@ -21,21 +21,21 @@ end
 
 # @param [String] char
 # @return [Boolean]
-def is_upper?(char)
+def upper?(char)
   /[A-Z]/.match(char)
 end
 
 # @param [String] char
 # @return [Boolean]
-def is_lower?(char)
+def lower?(char)
   /[a-z]/.match(char)
 end
 
 # @param [Array] arr
 # @return [Boolean] array contains uppercase and lower case version of la etter
-def has_match?(arr)
-  small = arr.select { |v| is_lower?(v) }.first
-  big = arr.select { |v| is_upper?(v) }.first
+def match?(arr)
+  small = arr.select { |v| lower?(v) }.first
+  big = arr.select { |v| upper?(v) }.first
   small && big && (small.upcase == big)
 end
 
@@ -46,12 +46,10 @@ def collapse_matches(arr)
   i = 0
   while i < arr.length
     pair = arr[i..i + 1]
-    if has_match?(pair)
-      i += 2
-    else
-      output << arr[i]
-      i += 1
-    end
+    # if there's a match, skip over it (i+=2 in total)
+    # if there's no match, add the value to the array
+    match?(pair) ? i += 1 : output << arr[i]
+    i += 1
   end
   output
 end
